@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename = 'css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/latest/TweenMax.min.js" integrity="sha512-8Wy4KH0O+AuzjMm1w5QfZ5j5/y8Q/kcUktK9mPUVaUoBvh3QPUZB822W/vy7ULqri3yR8daH3F58+Y8Z08qzeg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/latest/TimelineMax.min.js" integrity="sha512-lJDBw/vKlGO8aIZB8/6CY4lV+EMAL3qzViHid6wXjH/uDrqUl+uvfCROHXAEL0T/bgdAQHSuE68vRlcFHUdrUw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <title>CoviSafe</title>
+</head>
+<body>
+    <nav>
+        <div class="logo">
+            <ul>
+                <li><a href="{{ url_for('main.index') }}"><img src="static/img/covidlogo.png" class="logoimg"></a></li>
+            </ul>
+
+        </div>
+        <div class="nav-links">
+            <ul>
+                <li><a href="{{ url_for('main.index') }}">Home</a></li><span><i class="fa fa-home" aria-hidden="true"></i></span>
+                <li><a href="{{ url_for('main.covidupdates') }}">Covid Updates</a></li><span><i class="fa fa-line-chart" aria-hidden="true"></i></span>
+                {% if not current_user.is_authenticated %}
+                <li><a href="{{ url_for('auth.login') }}">Login</a></li><span><i class="fa fa-user" aria-hidden="true"></i></span>
+                {% endif %}
+                {% if current_user.is_authenticated %}
+                <li><a href="{{ url_for('main.selfassess') }}">Self Assess</a></li><span><i class="fa fa-stethoscope" aria-hidden="true"></i></span>
+                <li><a href="{{ url_for('main.profile')}}">Your Profile</a></li><span><i class="fa fa-user" aria-hidden="true"></i></span>
+                <li><a href="{{ url_for('auth.logout') }}">Logout</a></li><span><i class="fa fa-sign-out" aria-hidden="true"></i></span>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+    <header>
+      <div class="slider">
+          <div class="conatiner">
+              <img id="slide">
+              <article id='slider-article'><div class="holder"><p id="paragraph">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Distinctio veniam minus illo debitis nihil animi facere, doloremque voluptate tempore quia. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Distinctio veniam minus illo debitis nihil animi facere, doloremque voluptate tempore quia.</p></div></article>
+          </div>
+      </div>
+  </header>
+    <main>
+        <h2 style="margin-left:30px;">Covid-19 Quick Links</h2>
+        <h2 style="margin-left:30px;">__________________</h2>
+        <div class="headline">
+
+            <div class="information">
+                <span><ul><li><a href="{{ url_for('main.testing') }}">Testing and Hospitals</a></li></ul><i class="bi bi-arrow-right-circle-fill"></i></span>
+                <span><ul><li><a href="{{ url_for('main.vaccine') }}">Vaccination</a></li></ul><i class="bi bi-arrow-right-circle-fill"></i></span>
+                <span><ul><li><a href="{{ url_for('main.usefulinfo') }}">Useful Information</a></li></ul><i class="bi bi-arrow-right-circle-fill"></i></span>
+                <span><ul><li><a href="{{ url_for('main.faqs') }}">FAQ's</a></li></ul><i class="bi bi-arrow-right-circle-fill"></i></span>
+            </div>
+
+
+
+                <div class="timeline">
+                    <article>
+                        <br>
+                        <img src=static/img/19.jpg>
+                        <h2><a style="color: black; text-decoration: none; " href="https://covid19.who.int/">Coronavirus disease (COVID-19) Situation dashboard</a></h2>
+                        <p>This interactive dashboard/map provides the latest global numbers and numbers by country of COVID-19 cases on a daily basis.</p>
+                        <br>
+                    </article>
+                </div>
+                <div class="timeline">
+                    <article>
+                        <br>
+                        <img src=static/img/timeline.png>
+                        <h2><a style="color: black;text-decoration: none;" href="https://www.who.int/emergencies/diseases/novel-coronavirus-2019/interactive-timeline">Timeline: WHO's COVID-19 response</a></h2>
+                        <p>Explore the interactive timeline showcasing how the organization has taken action on information, science, leadership, advice, response and resourcing.</p><br>
+                    </article>
+                </div>
+            </div>
+        </div>
+        <div class="covisafe">
+
+
+            <!article >
+            <br><br>
+        <section style="padding:60px;  height: 500px;">
+
+                <h4  style="line-height: 30px; color: maroon; text-align:middle; font-weight: 700;" >CoviSafe is a Web Application developed with the vision to mitigate the spread of the Covid-19 Pandemic. Our resources help you self assess based on your symptoms using Machine Learning models, we also have quick links for testing centers across India and a vaccine enrollment page. The Covid updates of how the spike in cases and other useful information are easily available. FAQ's are helpful to understanding the Myths and Facts about Covid-19.Together we can mitigate the increasing positivity of the virus by taking better precautions and taking up early Covid tests and self-quarantining from others.</h4> <img src="static/img/together.png"    width="200px" height="250px">
+            <!/article></section>
+        </div>
+        <div class="video">
+            <br>
+            <h2 style="text-align: center;">Informative Videos</h2>
+            <br>
+            <div class="videos">
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/yEIPefMsf70" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/rLY174n_KWA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></iframe>
+            </div>
+        </div>
+    </main>
+    <footer>
+        <div class="footer-content">
+            <div class="container">
+                    <div class="what">
+                        <h5>Services</h5>
+                        <p>Assess again</p>
+                        <p>Doctor Appointment</p>
+                        <p>Vaccine and Testing</p>
+                    </div>
+                    <div class="Region">
+                        <h5>Quick Links</h5>
+                        <p >Testing and Hospitals</p>
+                        <p >Vaccines</p>
+                        <p >FAQ's</p>
+
+                    </div>
+                    <div class="about-us">
+                        <h5>About Us</h5>
+                        <p>Services</p>
+                        <p>Contact</p>
+                        <p>Team</p>
+
+
+                    </div>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>Copyright &copy;<script>document.write(new Date().getFullYear());</script> CoviSafe,   All rights reserved </p>
+        </div>
+    </footer>
+    <script src="{{ url_for('static',filename='js/anime.js') }}"></script>
+</body>
+</html>

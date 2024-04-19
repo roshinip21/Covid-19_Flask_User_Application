@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <meta name="description" content="Affordable and professional web design">
+	  <meta name="keywords" content="web design, affordable web design, professional web design">
+  	<meta name="author" content="Brad Traversy">
+    <title>Vaccination</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ url_for('static', filename = 'css/vaccine.css') }}">
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <div id="branding">
+          <h1><span class="highlight">Covi</span> Safe</h1>
+        </div>
+        <nav>
+          <ul>
+            <li class="current"><a href="{{ url_for('main.index') }}">Home</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <section id="showcase">
+      <div class="container">
+        <h1 style="color: rgb(0, 0, 0);">Vaccination and Immunization</h1>
+      </div>
+    </section>
+
+    <section id="newsletter">
+      <div class="container">
+        <marquee><h1><a style="color:#FFFFFF; text-decoration: none;" href="{{ url_for('main.registration') }}">Register here to get your vaccination!</a></h1></marquee>
+        <form>
+          <div class="row">
+            <div class="col">
+              <button type="button" id="app" class="btn btn-primary btn-sm">Book Appointment</button>
+              <script>
+                const app=document.getElementById("app")
+
+                app.addEventListener('click',()=>{
+                  window.location.href="http://localhost:5000/appointment"
+                })
+              </script>
+              <button type="button" id="app1" class="btn btn-primary btn-sm">Vaccine Slot Availability</button>
+              <script>
+                const app1=document.getElementById("app1")
+
+                app1.addEventListener('click',()=>{
+                  window.location.href="http://localhost:5000/vaccineavailability"
+                })
+              </script>
+            </div>
+          </div>
+        </form>
+      </div>
+    </section>
+    <section id="body">
+      <div class="container">
+        <div class="row">
+          <div class="col">
+              <div class="box">
+                <p><br>Immunization is a global health and development success story, saving millions of lives every year. Vaccines reduce risks of getting a disease by working with your body’s natural defences to build protection. When you get a vaccine, your immune system responds.<br>
+
+                  <br>We now have vaccines to prevent more than 20 life-threatening diseases, helping people of all ages live longer, healthier lives. Immunization currently prevents 2-3 million deaths every year from diseases like diphtheria, tetanus, pertussis, influenza and measles.<br>
+
+                  <br>Immunization is a key component of primary health care and an indisputable human right. It’s also one of the best health investments money can buy. Vaccines are also critical to the prevention and control of infectious-disease outbreaks. They underpin global health security and will be a vital tool in the battle against antimicrobial resistance.<br>
+
+                  <br>Yet despite tremendous progress, far too many people around the world – including nearly 20 million infants each year – have insufficient access to vaccines. In some countries, progress has stalled or even reversed, and there is a real risk that complacency will undermine past achievements.<br>
+
+                  <br>Global vaccination coverage – the proportion of the world’s children who receive recommended vaccines – has remained the same over the past few years.<br></p>
+              </div>
+              <div id = "slideshow">
+                <div id="carouselExampleDark" class="carousel carousel-dark slide" data-bs-ride="carousel">
+                  <div class="carousel-indicators">
+                    <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                    <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                    <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                    <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="3" aria-label="Slide 4"></button>
+                    <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="4" aria-label="Slide 5"></button>
+                    <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="5" aria-label="Slide 6"></button>
+                    <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="6" aria-label="Slide 7"></button>
+                  </div>
+                  <div class="carousel-inner">
+                    <div class="carousel-item active" data-bs-interval="3000">
+                      <img src="static/img/m&f.jpg" class="d-block w-100" alt="...">
+                      <div class="carousel-caption d-none d-md-block">
+                        <h5></h5>
+                        <p></p>
+                      </div>
+                    </div>
+                    <div class="carousel-item" data-bs-interval="4000">
+                      <img src="static/img/fact.jpg" class="d-block w-100" alt="...">
+                      <div class="carousel-caption d-none d-md-block">
+                        <h5></h5>
+                        <p></p>
+                      </div>
+                    </div>
+                    <div class="carousel-item" data-bs-interval="6000">
+                      <img src="static/img/mf.jpg" class="d-block w-100" alt="...">
+                      <div class="carousel-caption d-none d-md-block">
+                        <h5></h5>
+                        <p></p>
+                      </div>
+                    </div>
+                    <div class="carousel-item" data-bs-interval="7000">
+                      <img src="static/img/Vaccine Myth vs Fact.jpg" class="d-block w-100" alt="...">
+                      <div class="carousel-caption d-none d-md-block">
+                        <h5></h5>
+                        <p></p>
+                      </div>
+                    </div>
+                    <div class="carousel-item" data-bs-interval="8000">
+                      <img src="static/img/Vaccine Myth vs Fact 3.jpg" class="d-block w-100" alt="...">
+                      <div class="carousel-caption d-none d-md-block">
+                        <h5></h5>
+                        <p></p>
+                      </div>
+                    </div>
+                    <div class="carousel-item" data-bs-interval="9000">
+                      <img src="static/img/Vaccine Comparison Chart.jpg" class="d-block w-100" alt="...">
+                      <div class="carousel-caption d-none d-md-block">
+                        <h5></h5>
+                        <p></p>
+                      </div>
+                    </div>
+                  </div>
+                  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                  </button>
+                  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                  </button>
+                </div>
+              </div>
+
+          </div>
+          <div class="col">
+            <div style="margin-bottom: 10px;">
+            <button type="button" class="accordion__button" data-bs-toggle="collapse" data-bs-target="#collapse1" aria-expanded="false" aria-controls="collapseExample" style="width: 100%;">WHAT IS COVID-19?</button>
+            <div class="collapse" id="collapse1">
+              <div class="card card-body">
+                <p>
+                  <ul>
+                      <li>COVID-19 disease is caused by a Coronavirus called SARS-CoV-2. This type of Coronavirus has not been
+                        seen before. You can get COVID-19 through contact with another person who has the virus. It is
+                        predominantly a respiratory illness that can affect other organs. People with COVID-19 may experience
+                        wide range of symptoms from mild to severe category. Symptoms may appear 2 to 14 days after exposure
+                        to the virus. Symptoms may include fever or chills; cough; shortness of breath; fatigue; muscle or body
+                        aches; headache; loss of taste or smell of recent onset; sore throat; congestion or runny nose; nausea or
+                        vomiting; diarrhea.
+                        </li>
+                    </ul>
+                </p>
+              </div>
+            </div>
+          </div>
+          <div style="margin-bottom: 10px;">
+            <button type="button" class="accordion__button" data-bs-toggle="collapse" data-bs-target="#collapse2" aria-expanded="false" aria-controls="collapseExample" style="width: 100%;">WHAT IS THE BHARAT BIOTECH COVID-19 VACCINE (COVAXIN )?</button>
+            <div class="collapse" id="collapse2">
+              <div class="card card-body">
+                <p>
+                  <ul>
+                    <li>The Bharat Biotech COVID-19 Vaccine (COVAXIN ) is a vaccine with approval for restricted use in
+                      emergency situation that may prevent COVID-19. The Central Licensing Authority has granted
+                      ®
+                      permission for the sale or distribution of COVAXIN for restricted use in emergency situation in public
+                      interest.
+                      </li>
+                    </ul>
+                </p>
+              </div>
+            </div>
+          </div>
+          <div style="margin-bottom: 10px;">
+            <button type="button" class="accordion__button" data-bs-toggle="collapse" data-bs-target="#collapse3" aria-expanded="false" aria-controls="collapseExample" style="width: 100%;">WHO SHOULD GET COVAXIN ?</button>
+            <div class="collapse" id="collapse3">
+              <div class="card card-body">
+                <p>
+                  <ul>
+                      <li>COVAXIN has been approved for restricted use in emergency situation in individuals 18 years of age and
+                        older.
+                        </li>
+                    </ul>
+                </p>
+              </div>
+            </div>
+          </div>
+          <div style="margin-bottom: 10px;">
+            <button type="button" class="accordion__button" data-bs-toggle="collapse" data-bs-target="#collapse4" aria-expanded="false" aria-controls="collapseExample" style="width: 100%;">WHO SHOULD NOT GET COVAXIN ?</button>
+            <div class="collapse" id="collapse4">
+              <div class="card card-body">
+                <p>
+                  <ul>
+                    <p>You should not get COVAXIN if you:</p>
+                      <li>Had a severe allergic reaction to any ingredients of the vaccine.</li>
+                      <li>Had a severe allergic reaction after a previous dose of this vaccine.</li>
+                      <li>Currently have an acute infection or fever. </li>
+                    </ul>
+                </p>
+              </div>
+            </div>
+          </div>
+          <div style="margin-bottom: 10px;">
+            <button type="button" class="accordion__button" data-bs-toggle="collapse" data-bs-target="#collapse5" aria-expanded="false" aria-controls="collapseExample" style="width: 100%;">HOW IS THE BHARAT BIOTECH COVID-19 VACCINE (COVAXIN ) GIVEN?</button>
+            <div class="collapse" id="collapse5">
+              <div class="card card-body">
+                <p> The Bharat Biotech COVID-19 (COVAXIN ) will be given to you as an injection into the deltoid muscle of
+                  ®
+                  the upper arm. COVAXIN vaccination series is 2 doses given 4 weeks apart.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div style="margin-bottom: 10px;">
+            <button type="button" class="accordion__button" data-bs-toggle="collapse" data-bs-target="#collapse6" aria-expanded="false" aria-controls="collapseExample" style="width: 100%;">WHAT ARE THE BENEFITS OF COVAXIN ?</button>
+            <div class="collapse" id="collapse6">
+              <div class="card card-body">
+                <p>
+                    In an ongoing clinical trial, COVAXIN has been shown to generate immunity following 2 doses given 4
+                    weeks apart. Phase 3 clinical trial is ongoing in 25,800 participants, with an interim analysis results
+                    showing vaccine efficacy of 81%.
+                    Hence, it is important to appreciate that receiving the vaccine does not mean that other precautions
+                    related to COVID-19 need not be followed.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div style="margin-bottom: 10px;">
+            <button type="button" class="accordion__button" data-bs-toggle="collapse" data-bs-target="#collapse7" aria-expanded="false" aria-controls="collapseExample" style="width: 100%;">WHAT ARE THE RISKS OF BHARAT BIOTECH COVID-19 VACCINE (COVAXIN )?</button>
+            <div class="collapse" id="collapse7">
+              <div class="card card-body">
+                <p>
+                  <ul>
+                    <p>Side effects that have been reported with the Bharat Biotech COVID-19(COVAXIN) include:</p>
+                    <li>Injection site pain / Swelling / Redness / Itching</li>
+                    <li>Headache</li>
+                    <li>Fever</li>
+                    <li>Malaise/body ache</li>
+                    <li>Nausea</li>
+                    <li>Vomiting</li>
+                    <li>Rashes</li>
+                    </ul>
+                </p>
+              </div>
+            </div>
+          </div>
+          <div style="margin-bottom: 10px;">
+            <button type="button" class="accordion__button" data-bs-toggle="collapse" data-bs-target="#collapse8" aria-expanded="false" aria-controls="collapseExample" style="width: 100%;">WILL THE BHARAT BIOTECH COVID-19 VACCINE (COVAXIN ) GIVE ME COVID-19?</button>
+            <div class="collapse" id="collapse8">
+              <div class="card card-body">
+                <p>
+                  No. BHARAT BIOTECH COVID-19 VACCINE (COVAXIN ) is an inactivated (killed) vaccine, and hence,
+                  there is no chance of getting COVID-19.
+                </p>
+              </div>
+            </div>
+          </div>
+          </div>
+        </div>
+        <br>
+        <br>
+        <div class="horizontal-scrollable">
+          <div class="row text-center">
+              <div class="col-md-3"><div class="card" style="width: 18rem; height: 38rem;">
+                <img src="static/img/drive.jpg" class="card-img-top" alt="...">
+                <div class="card-body">
+                  <h5 class="card-title newsText">
+                    How India's vaccine drive went horribly wrong
+                  </h5>
+                  <p class="card-text newsText">It took 31-year-old Sneha Marathe half a day to book an appointment online for a Covid vaccine. "It was a game of 'fastest finger first'," she says.</p>
+                  <a href="https://www.bbc.com/news/world-asia-india-57007004" class="btn btn-primary">News</a>
+                </div>
+              </div></div>
+              <div class="col-md-3"><div class="card" style="width: 18rem; height: 38rem;">
+                <img src="static/img/infected.jpg" class="card-img-top" alt="...">
+                <div class="card-body">
+                  <h5 class="card-title newsText">Explained: When to take your vaccine shot(s) if infected with Covid-19, and if not</h5>
+                  <p class="card-text newsText">Covid-19 Vaccine: How long can you afford to wait for the first or second dose, and how does that change if you are infected with Covid-19...</p>
+                  <a href="https://indianexpress.com/article/explained/explained-when-to-take-your-jabs-if-infected-and-if-not-7312737/" class="btn btn-primary">News</a>
+                </div>
+              </div></div>
+              <div class="col-md-3"><div class="card" style="width: 18rem; height: 38rem;">
+                <img src="static/img/pandemic.jpg" class="card-img-top" alt="...">
+                <div class="card-body">
+                  <h5 class="card-title newsText">COVID-19 | Finance Ministry asks states, UTs to prioritise vaccination of bank employees</h5>
+                  <p class="card-text newsText">Moneycontrol had on May 13 reported on the plight of bank employees suffering from COVID-19 infection. The government has now responded...</p>
+                  <a href="https://www.moneycontrol.com/news/business/covid-19-finance-ministry-asks-states-uts-to-prioritise-vaccination-of-bank-employees-6892821.html" class="btn btn-primary">News</a>
+                </div>
+              </div></div>
+              <div class="col-md-3"><div class="card" style="width: 18rem; height: 38rem;">
+                <img src="static/img/nepal.jpg" class="card-img-top" alt="...">
+                <div class="card-body">
+                  <h5 class="card-title newsText">Coronavirus live updates: 2,000 Indians stranded in Nepal set to be evacuated</h5>
+                  <p class="card-text newsText">India reports 3,43144 fresh Covid-19 cases, taking the case tally to 2,40,46809. With 4000 deaths in the last 24 hours, India's death toll stands...</p>
+                  <a href="https://timesofindia.indiatimes.com/india/coronavirus-lockdown-in-india-covid-19-cases-vaccine-news-live-updates-14-may-2021/liveblog/82621508.cms" class="btn btn-primary">News</a>
+                </div>
+              </div></div>
+              <div class="col-md-3"><div class="card" style="width: 18rem; height: 38rem;">
+                <img src="static/img/covaxin.jpg" class="card-img-top" alt="...">
+                <div class="card-body">
+                  <h5 class="card-title newsText">Vaccine Makers Invited To Produce Covaxin To Address Shortage</h5>
+                  <p class="card-text newsText">The central government and Bharat Biotech are willing to invite other companies which want to produce Covaxin to help scale up its production....</p>
+                  <a href="https://www.ndtv.com/india-news/vaccine-makers-invited-to-produce-covaxin-to-address-shortage-2441216" class="btn btn-primary">News</a>
+                </div>
+
+          </div>
+      </div>
+      </div>
+    </section>
+    <div class="accordion">
+
+      <div class="accordion__content">
+
+
+      </div>
+    </div>
+    <footer>
+      <p>CoviSafe, Copyright &copy; 2021</p>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-p34f1UUtsS3wqzfto5wAAmdvj+osOnFyQFpp4Ua3gs/ZVWx6oOypYoCJhGGScy+8" crossorigin="anonymous"></script>
+    <script>
+      document.querySelectorAll('.accordion__button').forEach(button => {
+        button.addEventListener('click', () => {
+          const accordionContent = button.nextElementSibling;
+
+          button.classList.toggle('accordion__button--active');
+
+          if (button.classList.contains('accordion__button--active')) {
+            accordionContent.style.maxHeight = accordionContent.scrollHeight + 'px';
+          } else {
+            accordionContent.style.maxHeight = 0;
+          }
+        });
+        });
+
+      </script>
+  </body>
+</html>

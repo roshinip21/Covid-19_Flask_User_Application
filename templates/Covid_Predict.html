@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+        crossorigin="anonymous"></script>
+
+    <title>Self Access</title>
+</head>
+
+<body>
+    <!-- Java Script -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+        crossorigin="anonymous"></script>
+
+
+    <!-- Navbar-->
+    <nav class="navbar navbar-dark bg-dark">
+        <span class="navbar-brand mb-0 h1">Covid-19 Self Assess Test</span>
+        <a href="{{ url_for('main.index') }}" style="text-decoration: none; margin-left: 700px;">Home</a>
+        <a href="{{ url_for('main.profile')}}" style="text-decoration: none;">Your Profile</a>
+        <a href="{{ url_for('auth.logout') }}" style="text-decoration: none;" >Logout</a>
+    </nav>
+    <br>
+    <div class="container">
+        <br>
+        <!--Form-->
+        <form action="{{url_for('main.predict')}}" method="POST">
+            <fieldset>
+                <legend>Covid-19 Symptoms Form</legend><br>
+                <div class="card card-body">
+                    <div class="form-group  row">
+                        <div class="col-sm-3">
+                            <label for="sym1">Breathing Problems</label>
+                            <select class="form-control" id="Breathing" name="Breathing" required>
+                                <option disabled selected value> -- Select an Option -- </option>
+                                <option value="1">Yes</option>
+                                <option value="0">No</option>
+                            </select>
+                        </div>
+                        <div class="col-sm">
+                            <label for="sym2">Fever</label>
+                            <select class="form-control" id="sym2" name="sym2" required>
+                                <option disabled selected value> -- Select an Option -- </option>
+                                <option value="1">Yes</option>
+                                <option value="0">No</option>
+
+                            </select>
+                        </div>
+                        <div class="col-sm">
+                            <label for="sym3">Dry Cough</label>
+                            <select class="form-control" id="sym3" name="sym3" required>
+                                <option disabled selected value> -- Select an Option -- </option>
+                                <option value="1">Yes</option>
+                                <option value="0">No</option>
+                            </select>
+                        </div>
+                    </div><br>
+                    <div class="form-group  row">
+                        <div class="col-sm">
+                            <label for="sym4">Sore Throat</label>
+                            <select class="form-control" id="sym4" name="sym4" required>
+                                <option disabled selected value> -- Select an Option -- </option>
+                                <option value="1">Yes</option>
+                                <option value="0">No</option>
+                            </select>
+                        </div>
+                        <div class="col-sm">
+                            <label for="sym5">Hyper Tension</label>
+                            <select class="form-control" id="sym5" name="sym5" required>
+                                <option disabled selected value> -- Select an Option -- </option>
+                                <option value="1">Yes</option>
+                                <option value="0">No</option>
+                            </select>
+                        </div>
+                        <div class="col-sm">
+                            <label for="sym6">Travelled Abroad</label>
+                            <select class="form-control" id="sym6" name="sym6" required>
+                                <option disabled selected value> -- Select an Option -- </option>
+                                <option value="1">Yes</option>
+                                <option value="0">No</option>
+                            </select>
+                        </div>
+                    </div><br>
+                    <div class="form-group  row">
+                        <div class="col-sm">
+                            <label for="sym4">Contact with COVID Patient</label>
+                            <select class="form-control" id="sym7" name="sym7" required>
+                                <option disabled selected value> -- Select an Option -- </option>
+                                <option value="1">Yes</option>
+                                <option value="0">No</option>
+                            </select>
+                        </div>
+                        <div class="col-sm">
+                            <label for="sym5">Attended Large Gatherings</label>
+                            <select class="form-control" id="sym8" name="sym8" required>
+                                <option disabled selected value> -- Select an Option -- </option>
+                                <option value="1">Yes</option>
+                                <option value="0">No</option>
+                            </select>
+                        </div>
+                        <div class="col-sm">
+                            <label for="sym6">Visited Public Places</label>
+                            <select class="form-control" id="sym9" name="sym9" required>
+                                <option disabled selected value> -- Select an Option -- </option>
+                                <option value="1">Yes</option>
+                                <option value="0">No</option>
+                            </select>
+                        </div>
+                        <div class="col-sm">
+                            <label for="sym6">Family working in public places</label>
+                            <select class="form-control" id="sym10" name="sym10" required>
+                                <option disabled selected value> -- Select an Option -- </option>
+                                <option value="1">Yes</option>
+                                <option value="0">No</option>
+                            </select>
+                        </div>
+                    </div>
+                    <br>
+
+                    <br>
+                    <div class="form-group">
+                        <input class="btn btn-primary" type="submit" value="Result" style="width: 300px; text-align:center; margin-left: 375px;">
+                    </div>
+
+                    <!--Prediction Result-->
+                    <div id="result">
+                        <strong style="color:red">{{result}}</strong>
+                    </div>
+
+                </div>
+            </fieldset>
+        </form>
+    </div>
+
+</body>
+</html>

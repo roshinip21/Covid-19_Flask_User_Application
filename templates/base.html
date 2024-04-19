@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+    .hero-body {
+    background-image: url("static/img/bg.jpg");
+    background-color: #666666;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    }
+    </style>
+    <meta charset="utf-8">
+    <script type = "text/javascript"
+         src = "{{ url_for('static', filename = 'cities.js') }}" ></script>
+    <script type = "text/javascript"
+              src = "{{ url_for('static', filename = 'pass.js') }}" ></script>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>CoviSafe</title>
+    <link rel="stylesheet" href="{{ url_for('static',filename = 'css/style1.css')}} " />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.2/css/bulma.min.css" />
+</head>
+
+<body>
+    <section class="hero is-primary is-fullheight">
+
+        <div class="hero-head" style="background-color:black;">
+          <nav style="height:110px">
+              <div class="logo">
+                  <ul>
+                      <li><a href="index.html"><img src="static/img/covidlogo.png" class="logoimg"></a></li>
+                  </ul>
+                  <!--h3 style="margin-bottom: 50px;color: white;">CoviSafe</h3-->
+              </div>
+              <div class="nav-links">
+                  <ul>
+                      <li><a href="{{ url_for('main.index') }}">Home</a></li><span><i class="fa fa-home" aria-hidden="true"></i></span>
+                      <li><a href="#">Covid Updates</a></li><span><i class="fa fa-line-chart" aria-hidden="true"></i></span>
+                      {% if not current_user.is_authenticated %}
+                      <li><a href="{{ url_for('auth.login') }}">Login</a></li><span><i class="fa fa-user" aria-hidden="true"></i></span>
+                      {% endif %}
+                      {% if current_user.is_authenticated %}
+                      <li><a href="{{ url_for('main.selfassess') }}">Self Assess</a></li><span><i class="fa fa-stethoscope" aria-hidden="true"></i></span>
+                      <li><a href="{{ url_for('main.profile')}}">Your Profile</a></li><span><i class="fa fa-user" aria-hidden="true"></i></span>
+                      <li><a href="{{ url_for('auth.logout')}}">Logout</a></li><span><i class="fa fa-sign-out" aria-hidden="true"></i></span>
+                      {% endif %}
+                  </ul>
+              </div>
+          </nav>
+        </div>
+
+        <div class="hero-body">
+            <div class="container has-text-centered">
+               {% block content %}
+               {% endblock %}
+            </div>
+        </div>
+    </section>
+</body>
+
+</html>

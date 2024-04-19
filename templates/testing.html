@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename = 'css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css">
+    <title>FAQ's</title>
+</head>
+<body>
+    <nav>
+        <div class="logo">
+            <ul>
+                <li><a href="{{ url_for('main.index') }}"><img src="static/img/covidlogo.png" class="logoimg"></a></li>
+            </ul>
+
+        </div>
+        <div class="nav-links">
+            <ul>
+                <li><a href="{{ url_for('main.index') }}">Home</a></li><span><i class="fa fa-home" aria-hidden="true"></i></span>
+                <li><a href="#">Self Assess</a></li><span><i class="fa fa-stethoscope" aria-hidden="true"></i></span>
+                <li><a href="#">Covid Updates</a></li><span><i class="fa fa-line-chart" aria-hidden="true"></i></span>
+                {% if not current_user.is_authenticated %}
+                <li><a href="{{ url_for('auth.login') }}">Login</a></li><span><i class="fa fa-user" aria-hidden="true"></i></span>
+                {% endif %}
+                {% if current_user.is_authenticated %}
+                <li><a href="{{ url_for('main.profile')}}">Your Profile</a></li><span><i class="fa fa-user" aria-hidden="true"></i></span>
+                <li><a href="{{ url_for('auth.logout') }}">Logout</a></li><span><i class="fa fa-sign-out" aria-hidden="true"></i></span>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+
+ <!--section style="padding:450px;">
+
+ </section-->
+
+
+
+<div class="maps" style="margin:20px; padding: 10px; ">
+    <h3 style="font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; font-size: 25px;">Hospitals & Bed Availability across various states/cities</h4>
+    <br><p> Select your state </p>
+    <br><select id="selector">
+    <option value="about:blank">Select State or City</option>
+    <option value="https://view-awesome-table.com/-MbFUJQf9aRTq3yEZH3I/view">Bangalore</option>
+    <option value="https://view-awesome-table.com/-MbKD8Wc9Ikz4FOzIBpF/view">Uttar Pradesh</option>
+    <option value="https://view-awesome-table.com/-MbMT-uh-OaB_K8hwRzv/view">Delhi</option>
+    <option value="https://view-awesome-table.com/-MbKhuV-mQZbjOll2ntT/view">Kerala</option>
+    <option value="https://view-awesome-table.com/-MbKHPhHOuEgaDhXJn3C/view">Andhra Pradesh</option>
+    <option value="https://view-awesome-table.com/-MbL8kozcjMSH7m47Ldf/view">Rajasthan</option>
+    <option value="https://view-awesome-table.com/-M_UehH3D1ANcNDYRSBh/view">Tamil Nadu</option>
+    <option value="https://view-awesome-table.com/-MbMVgxVm6m1qSAFsptA/view">West Bengal</option>
+    <option value="https://view-awesome-table.com/-MbMZ-nQA05Z-FJS7ZtD/view">Madhya Pradesh</option>
+    <option value="https://view-awesome-table.com/-MbMdtoZuTWp2fFYh05D/view">Telangana</option>
+    <option value="https://view-awesome-table.com/-MbMiMuvZ97Wl6QDrueN/view">Ahmedabad</option>
+    </select>
+    <div>
+        <iframe referrerpolicy="no-referrer-when-downgrade" height="600px" width="100%" style="border:none;" src="about:blank" frameborder="0" id="iframeId"></iframe>
+    </div>
+    <br><br>
+    <!--iframe width="1300" height="450" src="https://www.powerbi.com/view?r=eyJrIjoiOTcyM2JkNTQtYzA5ZS00MWI4LWIxN2UtZjY1NjFhYmFjZDBjIiwidCI6ImQ1ZmE3M2I0LTE1MzgtNGRjZi1hZGIwLTA3NGEzNzg4MmRkNiJ9" frameborder="0" allowFullScreen="true"></iframe-->
+  </div>
+
+<section style="padding:100px;  height: 400px;">
+    <img  align="right" src="static/img/testing.jpg" width="450px" height="450px" />
+    <br><br>
+    <h3>Testing can help people determine if they are infected with SARS-CoV-2 – regardless of whether they have symptoms – and whether they are at risk of spreading the infection to others. Taking measures to prevent the spread of infection will be the most effective strategy for getting us safely back to work and school.</h3>
+    <br><br>
+     <h2>For More Testing Centers across India :</h2>
+    <h3><a style="color: red;text-decoration: none;" href="https://covid.icmr.org.in/index.php/testing-facilities#23.1657896/77.2161886/5/hotspot/426">Click Here</a></h3>
+
+  </section>
+
+
+
+
+
+
+
+
+<footer>
+        <div class="footer-content">
+            <div class="container">
+                    <div class="what">
+                        <h5>Services</h5>
+                        <p>Assess again</p>
+                        <p>Doctor Appointment</p>
+                        <p>Vaccine and Testing</p>
+                    </div>
+                    <div class="Region">
+                        <h5>Quick Links</h5>
+                        <p >Testing and Hospitals</p>
+                        <p >Vaccines</p>
+                        <p >FAQ's</p>
+
+                    </div>
+                    <div class="about-us">
+                        <h5>About Us</h5>
+                        <p>Services</p>
+                        <p>Contact</p>
+                        <p>Team</p>
+
+
+                    </div>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>Copyright &copy;<script>document.write(new Date().getFullYear());</script> CoviSafe,   All rights reserved </p>
+        </div>
+    </footer>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="{{ url_for('static',filename='maps.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="column is-4 is-offset-4">
+    <h3 class="title">Sign Up</h3>
+    <div class="box">
+      {% with messages = get_flashed_messages() %}
+      {% if messages %}
+    <div class="notification is-danger">
+        {{ messages[0] }}. Go to <a href="{{ url_for('auth.login') }}">login page</a>.
+    </div>
+    {% endif %}
+    {% endwith %}
+        <form method="POST" action="/signup">
+            <div class="field">
+                <div class="control">
+                    <input class="input is-medium" type="text" name="Name" placeholder="Enter Your Name" required>
+                </div>
+            </div>
+
+            <div class="field">
+                <div class="control">
+                    <input class="input is-medium" type="date" name="dob" placeholder="Enter your DOB" autofocus="" required>
+                </div>
+            </div>
+
+            <div class="field">
+                <div class="control">
+                    <label for="gender"> Select your gender </label>
+                    <input type="radio" name="gender" value="Male" required> Male
+                    <input type="radio" name="gender" value="Female"> Female
+                    <input type="radio" name="gender" value="Others"> Others
+                </div>
+            </div>
+
+            <div class="field">
+                <div class="control">
+                    <input class="input is-medium" type="text" name="phone" placeholder="Enter your phone number" autofocus="" required>
+                </div>
+            </div>
+
+            <div class="field">
+                <div class="control">
+                  <select class="select is-medium" onchange="print_city('state', this.selectedIndex);" id="sts" name ="stt" class="form-control" style="margin-right:180px;margin-top:15px;" required></select>
+                  <br>
+                  <br>
+                  <select class ="select is-medium" id ="state" name='city' class="form-control"></select>
+                  <script language="javascript">print_state("sts");</script>
+                </div>
+            </div>
+            <div class="field">
+                <div class="control">
+                    <input class="input is-medium" type="email" name="email" placeholder="Enter your Email-ID" autofocus="" required>
+                </div>
+            </div>
+
+            <div class="field">
+                <div class="control">
+                    <input class="input is-medium" id = "password" type="password" name="password" placeholder="Enter a password" onkeyup="check();" required>
+                </div>
+            </div>
+
+            <div class="field">
+                <div class="control">
+                    <input class="input is-medium" id = "confirmpassword" type="password" name="confirmpassword" placeholder="Re-enter your password" onkeyup="check();" required>
+                    <span id="message"></span>
+                </div>
+            </div>
+
+            <button class="button is-block is-info is-normal is-fullwidth">Sign Up</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

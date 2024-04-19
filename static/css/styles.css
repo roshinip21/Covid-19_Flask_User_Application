@@ -1,0 +1,21 @@
+.no-outline:focus {
+  outline: none;
+}
+
+.no-outline {
+  width: 100%;
+  border-style: none;
+  border-bottom-style: solid;
+  border-bottom-color: var(--indigo);
+  border-bottom-right-radius: 0px;
+  border-bottom-left-radius: 0px;
+  margin: 10px;
+  background: #e6e7ee;
+}
+
+@media (min-width: 768px) {
+  .fixed-pos {
+    position: fixed;
+  }
+}
+

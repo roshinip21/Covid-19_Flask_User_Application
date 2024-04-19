@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+    .hero-body {
+    background-image: url("bg.jpg");
+    background-color: #303030;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    }
+    </style>
+<div class="covidupdates">
+<h1>Covid Updates</h1>
+    <div class="currentstate">
+        <iframe  scrolling="yes" style="border:none;" seamless="seamless" src="https://aquwin11.github.io/visual/overall2.html" height="500" width="100%"></iframe>
+    </div>
+    <div class="select is-multiple">
+        <select >
+            <option value="confirm">confirm</option>
+            <option value="death">death</option>
+            <option value="recovery">recovery</option>
+            <option value="ratio">ratio</option>
+          </select>
+          <h2 id="heading" style='color:white;font-size:25px;'>Confirm Cases</h2>
+        <div class="covidmaps">
+            <img id="confirmmap" src='static/img/confirmcases.png'>
+        </div>
+        <div class="caseslinks">
+            <iframe id="confirmbar" scrolling="yes" style="border:none;" seamless="seamless" src="https://aquwin11.github.io/visual/confirmcasesbar2.html" height="500" width="100%"></iframe>
+        </div>
+        <div class="plotlylinks">
+            <iframe id="overallbar" scrolling="yes" style="border:none;" seamless="seamless" src="https://aquwin11.github.io/visual/confirmoverall2.html" height="500" width="100%"></iframe>
+        </div>
+    </div>
+</div>
+<script src="{{ url_for('static',filename='js/visual.js') }}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/latest/TweenMax.min.js" integrity="sha512-8Wy4KH0O+AuzjMm1w5QfZ5j5/y8Q/kcUktK9mPUVaUoBvh3QPUZB822W/vy7ULqri3yR8daH3F58+Y8Z08qzeg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/latest/TimelineMax.min.js" integrity="sha512-lJDBw/vKlGO8aIZB8/6CY4lV+EMAL3qzViHid6wXjH/uDrqUl+uvfCROHXAEL0T/bgdAQHSuE68vRlcFHUdrUw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="{{ url_for('static',filename='js/anime.js') }}"></script>
+{% endblock %}

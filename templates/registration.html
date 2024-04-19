@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head>
+        <meta charset="UTF-8">
+        <title>COVID-19 Vaccine Registration Form</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename = 'css/registration.css') }}">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+
+
+        
+        
+        <div class="container">
+           
+            <div class="title">Registration</div>
+            
+            <form method="POST" action="/register" enctype="multipart/form-data">
+                <div class="user-details">
+                    
+                    <div class="input-box">
+                        <span class="details">Full Name</span>
+                        <input type="text" placeholder="Enter your name" name="Name" required>
+                    </div>
+                    <div class="input-box">
+                        <span class="details">Email</span>
+                        <input type="email" placeholder="example@example.com" name="email" required>
+                    </div>
+                    <div class="input-box">
+                        <span class="details">Birth Date</span>
+                        <input type="date" placeholder="MM-DD-YYYY" name="dob" required>
+                    </div>
+                    <div class="gender-details">
+                        <input type="radio" name="gender" id="dot-1">
+                        <input type="radio" name="gender" id="dot-2">
+                        <input type="radio" name="gender" id="dot-3">
+                        <span class="gender-title">Gender</span>
+                        <div class="category">
+                            <label for="dot-1">
+                                <span class="dot one"></span>
+                                <span class="gender">Male</span>  
+                            </label>
+                            <label for="dot-2">
+                               <span class="dot two"></span>
+                               <span class="gender">Female</span>  
+                           </label>
+                           <label for="dot-3">
+                               <span class="dot three"></span>
+                               <span class="gender">Others</span>  
+                           </label>
+                        </div>
+                    </div> 
+                    <div class="input-box">
+                        <span class="details">Phone Number</span>
+                        <input type="phone"  maxlength="10" placeholder="Enter valid Ph.No" name="phone" required>
+                    </div>
+                    <div class="input-box">
+                        <span class="details">Aadhar Number</span>
+                        <input type="text"  maxlength="12" placeholder="xxxx-xxxx-xxxx" name="aadhar" required>
+                    </div>
+                    <div class="input-box">
+                        <span class="details">Address</span>
+                        <input type="text" placeholder="Street address" name="address"required>
+                    </div>
+                    <div class="input-box">
+                        <span class="details"></span>
+                        <input type="text" placeholder="Street address line 2" name="address2"required>
+                    </div>
+                    <div class="input-box">
+                        <span class="details"></span>
+                        <input type="text" placeholder="City" name="city" required>
+                    </div>
+                    <div class="input-box">
+                        <span class="details"></span>
+                        <input type="text" placeholder="State/Province" name="state"required>
+                    </div>
+                    <div class="input-box">
+                        <span class="details"></span>
+                        <input type="text"  maxlength="6" placeholder="Postal/Zip Code" name="pincode" required>
+                    </div>
+                    <div class="input-box">
+                        <span class="details">Insurance Company Name</span>
+                        <input type="text" placeholder="" name="insuranceName" required>
+                    </div>
+                    <div class="input-box">
+                        <span class="details">Insurance ID</span>
+                        <input type="text"  maxlength="13" minlength="9" placeholder="" name="insuranceID" required>
+                    </div>
+                </div> 
+                 <div class="button">
+                     <input type="Submit" value="Register">
+                 </div>   
+            </form>
+        </div>
+    </body>

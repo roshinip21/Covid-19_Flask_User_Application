@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>CoviSafe</title>
+    <meta name="twitter:card" content="summary">
+    <meta name="description" content="CoviSafe provides the information about the COVISHIELD or COVAXIN vaccine slots availability in a particular district and pin code for a particular Age and date.">
+    <meta property="og:type" content="website">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/news.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/Social-Icons.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+
+<body style="font-family: Poppins, sans-serif;background: #e6e7ee;" onload="onloadFetchVaccineCenters()">
+  <nav style="height:35%;">
+      <div class="logo">
+          <ul>
+              <li><a href="{{ url_for('main.index') }}"><img src="static/img/covidlogo.png" class="logoimg"></a></li>
+          </ul>
+
+      </div>
+      <div class="nav-links">
+          <ul>
+              <li><a href="{{ url_for('main.index') }}">Home</a></li><span><i class="fa fa-home" aria-hidden="true"></i></span>
+              <li><a href="{{ url_for('main.covidupdates') }}">Covid Updates</a></li><span><i class="fa fa-line-chart" aria-hidden="true"></i></span>
+              {% if not current_user.is_authenticated %}
+              <li><a href="{{ url_for('auth.login') }}">Login</a></li><span><i class="fa fa-user" aria-hidden="true"></i></span>
+              {% endif %}
+              {% if current_user.is_authenticated %}
+              <li><a href="{{ url_for('main.selfassess') }}">Self Assess</a></li><span><i class="fa fa-stethoscope" aria-hidden="true"></i></span>
+              <li><a href="{{ url_for('main.profile')}}">Your Profile</a></li><span><i class="fa fa-user" aria-hidden="true"></i></span>
+              <li><a href="{{ url_for('auth.logout') }}">Logout</a></li><span><i class="fa fa-sign-out" aria-hidden="true"></i></span>
+              {% endif %}
+          </ul>
+      </div>
+  </nav>
+    <!-- Start: header mobile -->
+    <!--div class="container-fluid d-block d-print-none d-sm-block d-md-none d-lg-none d-xl-none" style="color: #000;margin-bottom: 15px;">
+    </div><! End: header mobile -->
+    <!-- Start: header -->
+    <!--div class="container-fluid text-center d-none d-print-block d-sm-none d-md-block d-lg-block d-xl-block" style="color: #000;margin-bottom: 60px;">
+    </div><!End: header -->
+    <!-- Start: 1 Row 2 Columns -->
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Start: Filters -->
+            <div class="col-md-5 col-lg-4 col-xl-3 fixed-pos">
+              <br>
+                <div class="card">
+                    <div class="card-body" style="padding-top: 5px;padding-bottom: 5px;">
+                        <div class="row justify-content-between">
+                            <div class="col-6 col-sm-6 col-xl-6">
+                                <h5>Filters</h5>
+                            </div>
+                            <div class="col-6 col-sm-6 col-xl-2 text-right" id="filter-arrow" onclick="filtertoggle()"><i class="fa fa-arrow-up" id="filter-icon"></i></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" id="filters">
+                    <div class="col">
+                <!-- Start: Date -->
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row justify-content-between">
+                            <div class="col-10 col-sm-10 col-xl-10">
+                                <h6 class="text-muted card-subtitle mb-2">Date</h6>
+                            </div>
+                            <div class="col-2 col-sm-2 col-xl-2 text-right" onclick="filteroptiontoggle('#fil_date','#fil-date-icon')"><i class="fa fa-plus" id="fil-date-icon"></i></div>
+                        </div>
+                        <div class="row" style="display: none;" id="fil_date">
+                            <input class="form-control-sm no-outline" type="date" onchange="onloadFetchVaccineCenters()" id="schedule_date" value="{{data['date'].strftime('%Y-%m-%d')}}">
+                        </div>
+
+                    </div>
+                </div><!-- End: Date -->
+            </div>
+
+            <div class="col-sm-12">
+                <!-- Start: search options -->
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row justify-content-between">
+                            <div class="col-10 col-sm-10 col-xl-10">
+                                <h6 class="text-muted card-subtitle mb-2">Search options</h6>
+                            </div>
+                            <div class="col-2 col-sm-2 col-xl-2 text-right" onclick="filteroptiontoggle('#fil_so','#fil-so-icon')"><i class="fa fa-plus" id="fil-so-icon"></i></div>
+                        </div>
+
+                        <div class="row"  style="display: none;" id="fil_so">
+                            <div class="col">
+                                <div class="form-check"><input class="form-check-input" type="radio"  name="searchOptions" onchange="onChangeSearchoptionsHandler()"  value="DISTRICT" id="formCheck-1"><label class="form-check-label" for="formCheck-1">District</label></div>
+                            </div>
+                            <div class="col">
+                                <div class="form-check"><input class="form-check-input" type="radio"  name="searchOptions" onchange="onChangeSearchoptionsHandler()" value="PINCODE" id="formCheck-2" checked><label class="form-check-label" for="formCheck-2" >Pincode</label></div>
+                            </div>
+                        </div>
+                    </div>
+                </div><!-- End: search options -->
+            </div>
+            <div class="col-lg-12">
+                <!-- Start: Pincode -->
+                <div class="card" style="margin:10px" id="searchByPincode_div">
+                    <div class="card-body">
+                        <div class="row justify-content-between">
+                            <div class="col-10 col-sm-10 col-xl-10">
+                                <input type="hidden" id="hidden_state" value="{{data['geolocation']['address']['state']}}">
+                                <h6 class="text-muted card-subtitle mb-2">Pincode</h6>
+                            </div>
+                            <div class="col-2 col-sm-2 col-xl-2 text-right" onclick="filteroptiontoggle('#fil_pincode','#fil-pincode-icon')"><i class="fa fa-plus" id="fil-pincode-icon"></i></div>
+                        </div>
+                        <div class="row"  style="display: none;" id="fil_pincode">
+                            <input class="form-control-sm no-outline" id="data_pincode" onblur="onloadFetchVaccineCenters()" type="text" placeholder="Search by Pin code" value="{{data['geolocation']['address']['postcode']}}">
+                        </div>
+
+                    </div>
+                </div><!-- End: Pincode -->
+            </div>
+            <div class="col">
+                <!-- Start: Search by District -->
+                <div class="card" style="margin:10px;display: none;" id="searchByDistrict_div">
+                    <div class="card-body">
+
+                        <div class="row justify-content-between">
+                            <div class="col-10 col-sm-10 col-xl-10">
+                                <h6 class="text-muted card-subtitle mb-2">Search by district</h6>
+                            </div>
+                            <div class="col-2 col-sm-2 col-xl-2 text-right" onclick="filteroptiontoggle('#fil_district','#fil-district-icon')"><i class="fa fa-plus" id="fil-district-icon"></i></div>
+                        </div>
+
+
+                        <div class="row"  style="display: none;" id="fil_district">
+                            <div class="col">
+                                <select class="dropdown no-outline" onchange="onchangeGetDistrict(this)"  id="state_id"  >
+                                    <option value="0">Select State</option>
+                                    {% for d_state in data['states'] %}
+                                    <option value="{{d_state['state_id']}}" {% if d_state['state_name'].upper() == data['geolocation']['address']['state'].upper() %} selected {% endif %}>{{d_state['state_name']}}</option>
+                                    {% endfor %}
+                                </select>
+
+                            </div>
+                            <div class="col">
+                                <select class="dropdown no-outline" id="district_id" onchange="onloadFetchVaccineCenters()">
+                                    <option value="">Select District</option>
+                                </select>
+
+                            </div>
+                        </div>
+                    </div>
+                </div><!-- End: Search by District -->
+            </div>
+            <div class="col-lg-12">
+                <!-- Start: Min age limit -->
+                <div class="card" style="margin:10px">
+                    <div class="card-body">
+                        <div class="row justify-content-between">
+                            <div class="col-10 col-sm-10 col-xl-10">
+                                <h6 class="text-muted card-subtitle mb-2">Min Age Limit</h6>
+                            </div>
+                            <div class="col-2 col-sm-2 col-xl-2 text-right" onclick="filteroptiontoggle('#fil_minage','#fil-minage-icon')"><i class="fa fa-plus" id="fil-minage-icon"></i></div>
+                        </div>
+
+                        <div class="row" style="display: none;" id="fil_minage">
+                            <div class="col">
+                                <div class="form-check"><input class="form-check-input" type="radio" onchange="onloadFetchVaccineCenters()" name="minAgeLimit" id="formCheck-age18" value="18" checked><label class="form-check-label" for="formCheck-age18">18+</label></div>
+                            </div>
+                            <div class="col">
+                                <div class="form-check"><input class="form-check-input" type="radio" onchange="onloadFetchVaccineCenters()" name="minAgeLimit" id="formCheck-age45" value="45"><label class="form-check-label" for="formCheck-age45">45+</label></div>
+                            </div>
+                        </div>
+                    </div>
+                </div><!-- End: Min age limit -->
+            </div>
+            <div class="col">
+                <!-- Start: Fee Type -->
+                <div class="card" style="margin:10px">
+                    <div class="card-body">
+                        <div class="row justify-content-between">
+                            <div class="col-10 col-sm-10 col-xl-10">
+                                <h6 class="text-muted card-subtitle mb-2">Fee Type</h6>
+                            </div>
+                            <div class="col-2 col-sm-2 col-xl-2 text-right" onclick="filteroptiontoggle('#fil_fee','#fil-fee-icon')"><i class="fa fa-plus" id="fil-fee-icon"></i></div>
+                        </div>
+
+                        <div class="row" style="display: none;" id="fil_fee">
+                            <div class="col">
+                                <div class="form-check"><input class="form-check-input" type="radio" onchange="onloadFetchVaccineCenters()" name="feeType" id="formCheck-free" value="Free" checked><label class="form-check-label" for="formCheck-free">Free</label></div>
+                            </div>
+                            <div class="col">
+                                <div class="form-check"><input class="form-check-input" type="radio" onchange="onloadFetchVaccineCenters()" name="feeType"  id="formCheck-paid" value="Paid"><label class="form-check-label" for="formCheck-paid">Paid</label></div>
+                            </div>
+                        </div>
+                    </div>
+                </div><!-- End: Fee Type -->
+            </div>
+            <div class="col-lg-12">
+                <!-- Start: Vaccine Type -->
+                <div class="card" style="margin:10px">
+                    <div class="card-body">
+                        <div class="row justify-content-between">
+                            <div class="col-10 col-sm-10 col-xl-10">
+                                <h6 class="text-muted card-subtitle mb-2">Vaccine type</h6>
+                            </div>
+                            <div class="col-2 col-sm-2 col-xl-2 text-right" onclick="filteroptiontoggle('#fil_vaccine','#fil-vaccine-icon')"><i class="fa fa-plus" id="fil-vaccine-icon"></i></div>
+                        </div>
+
+                        <div class="row" style="display: none;" id="fil_vaccine">
+                            <div class="col">
+                                <div class="form-check"><input class="form-check-input" type="radio" onchange="onloadFetchVaccineCenters()" name="vaccineType" id="formCheck-cs" value="COVISHIELD" checked><label class="form-check-label" for="formCheck-cs">COVISHIELD</label></div>
+                            </div>
+                            <div class="col">
+                                <div class="form-check"><input class="form-check-input" type="radio" onchange="onloadFetchVaccineCenters()" name="vaccineType" value="COVAXIN" id="formCheck-cw"><label class="form-check-label" for="formCheck-cw">COVAXIN</label></div>
+                            </div>
+                        </div>
+                    </div>
+                </div><!-- End: Vaccine Type -->
+            </div>
+
+                </div>
+            </div>
+            </div><!-- End: Filters -->
+            <!-- Start: Insights>
+            <div class="col-md-7 col-lg-8 col-xl-9 offset-md-5 offset-lg-4 offset-xl-3">
+                <div class="row row shadow-soft" style="margin-bottom: 20px;margin-left: 10px;margin-right: 10px;margin-top: 10px;">
+                    <div class="col-md-12">
+                        <div class="d-flex justify-content-between align-items-center breaking-news">
+                            <div class="d-flex flex-row flex-grow-1 flex-fill justify-content-center  py-2 px-1 news"><span class="d-flex align-items-center">&nbsp;Notifications
+                                </span></div>
+                            <marquee class="news-scroll" behavior="scroll" direction="left" onmouseover="this.stop();" onmouseout="this.start();">
+                                {% for notify in data['notifications']['notifications'] %}
+                                <span class="dot"></span><a target="_blank" href="{{notify['link']}}">{{notify['title']}}</a>
+                                {% endfor %}
+                            </marquee>
+                        </div>
+                    </div>
+            </div><!Start: Total cases analytics -->
+                            <!--div class="row justify-content-center">
+                                <div class="col-12 col-xl-5" style="margin: 5px;">
+                                    <h5 style="margin-left:10px">Total Cases</h5>
+                                    <div class="row">
+                                        <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                                            <div class="card cardcircle">
+                                                <div class="card-body">
+                                                    <h6 class="text-center card-subtitle" style="color: #ED0838;font-size: 12px;">Confirmed</h6>
+                                                    <div class="text-center d-block" style="margin-top: 10px ;"><span class="text-center d-inline-block" style="font-size: 14px;color: rgb(255,6,6);border-style: none;">{{"{:,}".format(data['case_summary']['total'],",")}}</span></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                                            <div class="card cardcircle">
+                                                <div class="card-body">
+                                                    <h6 class="text-center card-subtitle" style="color: var(blue);font-size: 12px;">Active</h6>
+                                                    <div class="text-center d-block" style="margin-top: 10px ;"><span class="text-center d-inline-block" style="font-size: 14px;color: var(--blue);border-style: none;">{{"{:,}".format(data['case_summary']['total']-(data['case_summary']['discharged']+data['case_summary']['deaths']),",")}}</span></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                                            <div class="card cardcircle">
+                                                <div class="card-body">
+                                                    <h6 class="text-center card-subtitle" style="color: var(green);font-size: 12px;">Recovered</h6>
+                                                    <div class="text-center d-block" style="margin-top: 10px ;"><span class="text-center d-inline-block" style="font-size: 14px;color: var(--green);border-style: none;">{{"{:,}".format(data['case_summary']['discharged'],",")}}</span></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                                            <div class="card cardcircle">
+                                                <div class="card-body">
+                                                    <h6 class="text-center card-subtitle" style="color: var(secondary);font-size: 12px;">Deceased<br></h6>
+                                                    <div class="text-center d-block" style="margin-top: 10px ;"><span class="text-center d-inline-block" style="font-size: 14px;color: var(--secondary);border-style: none;">{{"{:,}".format(data['case_summary']['deaths'],",")}}</span></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <h5 style="margin-left:10px;margin-top:20px">Total Cases in <span id="cases_state">{{data['geolocation']['address']['state']}}</span> </h5>
+                                    <div class="row">
+                                        <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                                            <div class="card cardcircle">
+                                                <div class="card-body">
+                                                    <h6 class="text-center card-subtitle" style="color: #ED0838;font-size: 12px;">Confirmed</h6>
+                                                    <div class="text-center d-block" style="margin-top: 10px ;"><span class="text-center d-inline-block" style="font-size: 14px;color: rgb(255,6,6);border-style: none;" id="case_confirmed">0</span></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                                            <div class="card cardcircle">
+                                                <div class="card-body">
+                                                    <h6 class="text-center card-subtitle" style="color: var(blue);font-size: 12px;">Active</h6>
+                                                    <div class="text-center d-block" style="margin-top: 10px ;"><span class="text-center d-inline-block" style="font-size: 14px;color: var(--blue);border-style: none;" id="case_active">0</span></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                                            <div class="card cardcircle">
+                                                <div class="card-body">
+                                                    <h6 class="text-center card-subtitle" style="color: var(green);font-size: 12px;">Recovered</h6>
+                                                    <div class="text-center d-block" style="margin-top: 10px ;"><span class="text-center d-inline-block" style="font-size: 14px;color: var(--green);border-style: none;" id="case_recovered">0</span></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                                            <div class="card cardcircle">
+                                                <div class="card-body">
+                                                    <h6 class="text-center card-subtitle" style="color: var(secondary);font-size: 12px;">Deceased<br></h6>
+                                                    <div class="text-center d-block" style="margin-top: 10px ;"><span class="text-center d-inline-block" style="font-size: 14px;color: var(--secondary);border-style: none;" id="case_deceased">0</span></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-xl-5" style="margin: 5px;">
+                                    <h5 style="margin-left:10px">Sample Collection Report</h5>
+                                    <div class="row">
+                                        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                            <div class="card cardcircle">
+                                                <div class="card-body">
+                                                    <div id="testinggraph"></div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!<div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                                            <div class="card cardcircle">
+                                                <div class="card-body">
+                                                    <h6 class="text-center card-subtitle" style="color: var(blue);font-size: 12px;">Individual Tested</h6>
+                                                    <div class="text-center d-block" style="margin-top: 10px ;"><span class="d-block" style="font-size: 10px;color: var(--green);margin-left: 5px;">(+2,000)</span><span class="text-center d-inline-block" style="font-size: 14px;color: var(--blue);border-style: none;">2,00,000,0000</span></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-12">
+                                            <div class="card cardcircle">
+                                                <div class="card-body">
+                                                    <h6 class="text-center card-subtitle" style="color: var(green);font-size: 12px;">Positive Cases</h6>
+                                                    <div class="text-center d-block" style="margin-top: 10px ;"><span class="d-block" style="font-size: 10px;color: var(--green);margin-left: 5px;">(+2,000)</span><span class="text-center d-inline-block" style="font-size: 14px;color: var(--green);border-style: none;">2,00,000,0000</span></div>
+                                                </div>
+                                            </div>
+                                        </div> -->
+                                    </div>
+                                </div>
+                            </div><!-- End: Total cases analytics -->
+                <!-- Start: charts -->
+                <!--div class="row" style="margin-bottom: 10px;">
+                    <div class="col-md-12 col-lg-6 col-xl-6 col-sm-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="chart" id="bargraph">
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 col-lg-6 col-xl-6 col-sm-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="chart" id="linegraph">
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div><!End: charts -->
+
+                <!-- Start: Table -->
+                <br>
+                <div class="row" style="margin-bottom: 0px; width:75%; margin-left:auto;">
+                    <div class="col">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title">Center Details</h4>
+                                <div class="table-responsive">
+                                    <div id="table_loader" ></div>
+                                    <table class="table table-borderless" id="table_main">
+                                        <thead style='font-size:12px'>
+                                            <tr>
+                                                <th  style='padding:2px;'>Center Name</th>
+                                                <th  style='padding:2px;'>Dose 1 Capacity</th>
+                                                <th  style='padding:2px;'>Dose 2 Capacity</th>
+                                                <th  style='padding:2px;'>Total Capacity</th>
+                                                <th  style='padding:2px;'>Date</th>
+                                                <th  style='padding:2px;'>Vaccine</th>
+                                                <th  style='padding:2px;'>Min Age Limit</th>
+                                                <th  style='padding:2px;'>Fee Type</th>
+                                                <th  style='padding:2px;'>Daily Timing</th>
+
+
+                                            </tr>
+                                        </thead>
+                                        <tbody id="center_table"  style='font-size:12px'>
+                                            <tr><td></td><td></td><td></td><td>No Data Available</td><td></td><td></td><td></td><td></td><td></td></tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div><!-- End: Table -->
+
+                                <!-- Start: Hospital & Beds>
+                                <div class="row justify-content-between">
+                                    <div class="col-12 col-xl-5" style="margin: 5px;">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <h5 class="text-center card-title" style="margin-left:10px">Hospital &amp; Beds Summary</h5><!Start: List group with pills and details>
+                                                <div class="list-group"><a class="list-group-item list-group-item-action flex-column align-items-start" href="#" style="background: rgba(255,255,255,0);border-style: none;padding-top: 2px;padding-bottom: 2px;">
+                                                        <div class="d-flex w-100 justify-content-between">
+                                                            <h6 class="mb-1">Rural Hospitals<br></h6><span class="badge badge-light text-muted align-self-center" style="background: rgba(248,249,250,0);">{{"{:,}".format(data['hospital_beds_summary']['ruralHospitals'],",")}}<br></span>
+                                                        </div>
+                                                    </a><a class="list-group-item list-group-item-action flex-column align-items-start" href="#" style="background: rgba(255,255,255,0);border-style: none;padding-top: 2px;padding-bottom: 2px;">
+                                                        <div class="d-flex w-100 justify-content-between">
+                                                            <h6 class="mb-1">Rural Beds<br></h6><span class="badge badge-light text-muted align-self-center" style="background: rgba(248,249,250,0);">{{"{:,}".format(data['hospital_beds_summary']['ruralBeds'],",")}}<br></span>
+                                                        </div>
+                                                    </a><a class="list-group-item list-group-item-action flex-column align-items-start" href="#" style="background: rgba(255,255,255,0);border-style: none;padding-top: 2px;padding-bottom: 2px;">
+                                                        <div class="d-flex w-100 justify-content-between">
+                                                            <h6 class="mb-1">Urban Hospitals<br></h6><span class="badge badge-light text-muted align-self-center" style="background: rgba(0,123,255,0);">{{"{:,}".format(data['hospital_beds_summary']['urbanHospitals'],",")}}<br></span>
+                                                        </div>
+                                                    </a><a class="list-group-item list-group-item-action flex-column align-items-start" href="#" style="background: rgba(255,255,255,0);border-style: none;padding-top: 2px;padding-bottom: 2px;">
+                                                        <div class="d-flex w-100 justify-content-between">
+                                                            <h6 class="mb-1">Urban Beds<br></h6><span class="badge badge-light text-muted align-self-center" style="background: rgba(248,249,250,0);">{{"{:,}".format(data['hospital_beds_summary']['urbanBeds'],",")}}<br></span>
+                                                        </div>
+                                                    </a><a class="list-group-item list-group-item-action flex-column align-items-start" href="#" style="background: rgba(255,255,255,0);border-style: none;border-top: 2px solid var(--indigo);padding-top: 10px;padding-bottom: 2px;">
+                                                        <div class="d-flex w-100 justify-content-between">
+                                                            <h6 class="mb-1">Total Hospitals<br></h6><span class="badge badge-light text-success align-self-center" style="background: rgba(248,249,250,0);">{{"{:,}".format(data['hospital_beds_summary']['totalHospitals'],",")}}<br></span>
+                                                        </div>
+                                                    </a><a class="list-group-item list-group-item-action flex-column align-items-start" href="#" style="background: rgba(255,255,255,0);border-style: none;padding-top: 2px;padding-bottom: 2px;">
+                                                        <div class="d-flex w-100 justify-content-between">
+                                                            <h6 class="mb-1">Total Beds<br></h6><span class="badge badge-light text-success align-self-center" style="background: rgba(248,249,250,0);">{{"{:,}".format(data['hospital_beds_summary']['totalBeds'],",")}}<br></span>
+                                                        </div>
+                                                    </a></div><!End: List group with pills and details>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-xl-6" style="margin: 5px;">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <h5 class="text-center card-title" style="margin-left:10px">Hospital &amp; Beds in <span id="hb_state">{{data['geolocation']['address']['state']}}</span></h5><!Start: List group with pills and details>
+                                                <div class="list-group"><a class="list-group-item list-group-item-action flex-column align-items-start" href="#" style="background: rgba(255,255,255,0);border-style: none;padding-top: 2px;padding-bottom: 2px;">
+                                                        <div class="d-flex w-100 justify-content-between">
+                                                            <h6 class="mb-1">Rural Hospitals<br></h6><span class="badge badge-light text-muted align-self-center" style="background: rgba(248,249,250,0);" id="state_ruralHospitals">0<br></span>
+                                                        </div>
+                                                    </a><a class="list-group-item list-group-item-action flex-column align-items-start" href="#" style="background: rgba(255,255,255,0);border-style: none;padding-top: 2px;padding-bottom: 2px;">
+                                                        <div class="d-flex w-100 justify-content-between">
+                                                            <h6 class="mb-1">Rural Beds<br></h6><span class="badge badge-light text-muted align-self-center" style="background: rgba(248,249,250,0);" id="state_ruralBeds">0<br></span>
+                                                        </div>
+                                                    </a><a class="list-group-item list-group-item-action flex-column align-items-start" href="#" style="background: rgba(255,255,255,0);border-style: none;padding-top: 2px;padding-bottom: 2px;">
+                                                        <div class="d-flex w-100 justify-content-between">
+                                                            <h6 class="mb-1">Urban Hospitals<br></h6><span class="badge badge-light text-muted align-self-center" style="background: rgba(0,123,255,0);" id="state_urbanHospitals">0<br></span>
+                                                        </div>
+                                                    </a><a class="list-group-item list-group-item-action flex-column align-items-start" href="#" style="background: rgba(255,255,255,0);border-style: none;padding-top: 2px;padding-bottom: 2px;">
+                                                        <div class="d-flex w-100 justify-content-between">
+                                                            <h6 class="mb-1">Urban Beds<br></h6><span class="badge badge-light text-muted align-self-center" style="background: rgba(248,249,250,0);" id="state_urbanBeds">0<br></span>
+                                                        </div>
+                                                    </a><a class="list-group-item list-group-item-action flex-column align-items-start" href="#" style="background: rgba(255,255,255,0);border-style: none;border-top: 2px solid var(--indigo);padding-top: 10px;padding-bottom: 2px;">
+                                                        <div class="d-flex w-100 justify-content-between">
+                                                            <h6 class="mb-1">Total Hospitals<br></h6><span class="badge badge-light text-success align-self-center" style="background: rgba(248,249,250,0);" id="state_totalHospitals">0<br></span>
+                                                        </div>
+                                                    </a><a class="list-group-item list-group-item-action flex-column align-items-start" href="#" style="background: rgba(255,255,255,0);border-style: none;padding-top: 2px;padding-bottom: 2px;">
+                                                        <div class="d-flex w-100 justify-content-between">
+                                                            <h6 class="mb-1">Total Beds<br></h6><span class="badge badge-light text-success align-self-center" style="background: rgba(248,249,250,0);" id="state_totalBeds">0<br></span>
+                                                        </div>
+                                                    </a></div><!End: List group with pills and details>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div><!End: Hospital & Beds -->
+                                <!-- Start: Medical Colleges>
+                                <div class="row" style="margin-bottom: 10px;">
+                                    <div class="col">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <h5 class="card-title">Medical Colleges in <span id="mc_state">{{data['geolocation']['address']['state']}}</span></h5>
+                                                <div class="table-responsive table-borderless">
+                                                    <table class="table">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>name<br></th>
+                                                                <th>City</th>
+                                                                <th>State</th>
+                                                                <th>Owner Ship</th>
+                                                                <th>Admission Capacity<br></th>
+                                                                <th>Hospital Beds</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody id="mc_table"  style='font-size:12px'>
+                                                            <tr><td></td><td></td><td>No Data Available</td><td></td><td></td><td></td></tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div><!End: Medical Colleges>
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <h5 class="text-left card-title">Helpline</h5>
+                                                <div class="row justify-content-between" style="margin-top: 10px;">
+                                                    <div class="col-md-12 col-lg-12 col-xl-5">
+                                                        <!Start: List group with pills and details>
+                                                        <div class="list-group"><a class="list-group-item list-group-item-action flex-column align-items-start" href="#" style="background: rgba(255,255,255,0);border-style: none;padding-top: 2px;padding-bottom: 2px;">
+                                                                <div class="d-flex w-100 justify-content-between">
+                                                                    <h6 class="mb-1"><span id="helpline_state">{{data['geolocation']['address']['state']}}</span><br></h6><span class="badge badge-light text-muted align-self-center" style="background: rgba(248,249,250,0);" id="state_helpline">N/A<br></span>
+                                                                </div>
+                                                            </a><a class="list-group-item list-group-item-action flex-column align-items-start" href="#" style="background: rgba(255,255,255,0);border-style: none;padding-top: 2px;padding-bottom: 2px;">
+                                                                <div class="d-flex w-100 justify-content-between">
+                                                                    <h6 class="mb-1">Phone Number<br></h6><span class="badge badge-light text-muted align-self-center" style="background: rgba(248,249,250,0);">{{data['contact']['number']}}<br></span>
+                                                                </div>
+                                                            </a><a class="list-group-item list-group-item-action flex-column align-items-start" href="#" style="background: rgba(255,255,255,0);border-style: none;padding-top: 2px;padding-bottom: 2px;">
+                                                                <div class="d-flex w-100 justify-content-between">
+                                                                    <h6 class="mb-1">TollFree<br></h6><span class="badge badge-light text-muted align-self-center" style="background: rgba(248,249,250,0);">{{data['contact']['number-tollfree']}}<br></span>
+                                                                </div>
+                                                            </a></div><!End: List group with pills and details>
+                                                    </div>
+                                                    <div class="col-lg-12 col-xl-4" style="padding: 15px;">
+                                                        <!Start: Social Icons>
+                                                        <div class="social-icons d-block" style="padding: 0px;background: transparent;"><a href="{{data['contact']['twitter']}}" target="_blank"><i class="icon ion-social-twitter shadow-soft" style="color: rgb(117,121,128);font-size: 24px;border-style: none;border-color: var(blue);"></i></a><a href="{{data['contact']['facebook']}}" target="_blank"><i class="icon ion-social-facebook shadow-soft" style="border-style: none;color: rgb(117,121,128);font-size: 24px;"></i></a><a href="mailto:{{data['contact']['email']}}"><i class="icon ion-email shadow-soft" style="border-style: none;color: rgb(117,121,128);font-size: 24px;"></i></a></div><!End: Social Icons -->
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+            </div><!-- End: Insights -->
+        </div>
+    </div><!-- End: 1 Row 2 Columns -->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
+    <script src="https://www.bing.com/widget/bootstrap.answer.js"></script>
+    <script data-ad-client="ca-pub-8183186871663345" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script src={{ url_for('static', filename='js/filter.js') }}></script>
+    <script src={{ url_for('static', filename='js/main.js') }}></script>
+</body>
+
+</html>
